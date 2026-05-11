@@ -248,6 +248,10 @@ void gunbustr_state::draw_sprites(screen_device &screen, bitmap_ind16 &bitmap, c
 		const int total_chunks = ((dblsize * 3) + 1) << 2;  // 4 or 16
 		const int map_offset = tilenum << 2;
 
+		// Offset for flip start position
+		// For some reason X doesn't need this
+		if (flipy) { y += 0x80 - zoomy; }
+
 		for (int sprite_chunk = 0; sprite_chunk < total_chunks; sprite_chunk++)
 		{
 			const int j = sprite_chunk / dimension;   // rows
@@ -573,7 +577,7 @@ void gunbustr_state::gunbustr(machine_config &config)
 
 	TC0480SCP(config, m_tc0480scp, 0);
 	m_tc0480scp->set_palette(m_palette);
-	m_tc0480scp->set_offsets(0x20, 0x07);
+	m_tc0480scp->set_offsets(0x20, 0x08);
 	m_tc0480scp->set_offsets_tx(-1, -1);
 	m_tc0480scp->set_offsets_flip(-1, 0);
 
